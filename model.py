@@ -333,13 +333,26 @@ class DeepSleepNet(DeepFeatureNet):
 
             # Feedforward to MultiRNNCell
             list_rnn_inputs = tf.unstack(seq_input, axis=1)
-            outputs, fw_state, bw_state = tf.nn.bidirectional_rnn(
+            print "\n1 {} \n".format(fw_cell)
+            print "\n2 {} \n".format(bw_cell)
+            print "\n3 {} \n".format(list_rnn_inputs)
+            print "\n4 {} \n".format(self.fw_initial_state)
+            print "\n5 {} \n".format(self.bw_initial_state)
+            outputs, fw_state, bw_state = tf.nn.static_bidirectional_rnn(
                 cell_fw=fw_cell,
                 cell_bw=bw_cell,
                 inputs=list_rnn_inputs,
                 initial_state_fw=self.fw_initial_state,
                 initial_state_bw=self.bw_initial_state
             )
+            """
+            outputs, fw_state, bw_state = tf.contrib.rnn.stack_bidirectional_rnn(
+                cell_fw=fw_cell,
+                cell_bw=bw_cell,
+                inputs=list_rnn_inputs,
+                initial_state_fw=self.fw_initial_state,
+                initial_state_bw=self.bw_initial_state
+            )"""
 
             if self.return_last:
                 network = outputs[-1]

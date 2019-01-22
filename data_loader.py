@@ -9,6 +9,9 @@ import re
 
 #8, 1, 15, 30, 36, 3, 25, 37, 9, 10,32, 24, 4, 31, 29, 38, 34, 16
 #32, 31
+train_idx = [8, 1, 15, 30, 36, 3, 25, 37, 9, 10,32, 24, 4, 31, 29, 38, 34, 16]
+val_idx = [32, 31]
+
 class NonSeqDataLoader(object):
 
     def __init__(self, data_dir, n_folds, fold_idx):
@@ -78,7 +81,17 @@ class NonSeqDataLoader(object):
             if ".npz" in f:
                 npzfiles.append(os.path.join(self.data_dir, f))
         npzfiles.sort()
-
+        
+        #my guy code
+        train_files = []
+        subject_files = []
+        for idx, f in enumerate(npzfiles):
+            if idx in train_idx:
+                train_files.append(f)
+            if idx in val_idx:
+                subject_files.append(f) 
+        print "subject files", subject_files
+        """
         if n_files is not None:
             npzfiles = npzfiles[:n_files]
 
@@ -102,7 +115,9 @@ class NonSeqDataLoader(object):
 
         train_files = list(set(npzfiles) - set(subject_files))
         train_files.sort()
-        subject_files.sort()
+        subject_files.sort()"""
+        
+
 
         # Load training and validation sets
         print "\n========== [Fold-{}] ==========\n".format(self.fold_idx)
@@ -271,7 +286,7 @@ class SeqDataLoader(object):
         if n_files is not None:
             npzfiles = npzfiles[:n_files]
 
-        subject_files = []
+        """subject_files = []
         for idx, f in enumerate(allfiles):
             if self.fold_idx < 10:
                 pattern = re.compile("[a-zA-Z0-9]*0{}[1-9]E0\.npz$".format(self.fold_idx))
@@ -282,7 +297,15 @@ class SeqDataLoader(object):
 
         train_files = list(set(npzfiles) - set(subject_files))
         train_files.sort()
-        subject_files.sort()
+        subject_files.sort()"""
+        #my guy code
+        train_files = []
+        subject_files = []
+        for idx, f in enumerate(npzfiles):
+            if idx in train_idx:
+                train_files.append(os.path.join(self.data_dir, f))
+            elif idx in val_idx:
+                subject_files.append(os.path.join(self.data_dir, f)) 
 
         # Load training and validation sets
         print "\n========== [Fold-{}] ==========\n".format(self.fold_idx)
