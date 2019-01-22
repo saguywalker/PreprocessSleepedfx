@@ -189,7 +189,7 @@ def batch_norm_new(name, input_var, is_train, decay=0.999, epsilon=1e-5):
         # Trainable beta and gamma variables
         beta = tf.get_variable('beta',
                                 shape=params_shape,
-                                initializer=tf.zeros_initializer)
+                                initializer=tf.zeros_initializer())
         gamma = tf.get_variable('gamma',
                                 shape=params_shape,
                                 initializer=tf.random_normal_initializer(mean=1.0, stddev=0.002))
@@ -197,7 +197,7 @@ def batch_norm_new(name, input_var, is_train, decay=0.999, epsilon=1e-5):
         # Moving mean and variance updated during training
         moving_mean = tf.get_variable('moving_mean',
                                       params_shape,
-                                      initializer=tf.zeros_initializer,
+                                      initializer=tf.zeros_initializer(),
                                       trainable=False)
         moving_variance = tf.get_variable('moving_variance',
                                           params_shape,

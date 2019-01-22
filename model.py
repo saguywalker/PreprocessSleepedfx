@@ -333,11 +333,12 @@ class DeepSleepNet(DeepFeatureNet):
 
             # Feedforward to MultiRNNCell
             list_rnn_inputs = tf.unstack(seq_input, axis=1)
-            print "\n1 {} \n".format(fw_cell)
-            print "\n2 {} \n".format(bw_cell)
+            print "\n1 {} \n".format(fw_lstm_cell)
+            print "\n2 {} \n".format(bw_lstm_cell)
             print "\n3 {} \n".format(list_rnn_inputs)
             print "\n4 {} \n".format(self.fw_initial_state)
             print "\n5 {} \n".format(self.bw_initial_state)
+            print "\n6 {} \n".format(seq_input)
             outputs, fw_state, bw_state = tf.nn.static_bidirectional_rnn(
                 cell_fw=fw_cell,
                 cell_bw=bw_cell,
